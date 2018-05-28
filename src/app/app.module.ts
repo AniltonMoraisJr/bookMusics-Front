@@ -1,24 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AppComponent } from './app.component';
+import { CookieService } from 'angular2-cookie/services/cookies.service'
+import { AuthenticationService } from  './authentication/authentication.service';
+
 import { routing } from './app.route';
-import { AuthenticationModule } from './authentication/authentication.module'
+import { AuthGuard } from './guards/auth.guard';
+import { AppComponent } from './app.component';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { AdminModule } from './admin/admin.module';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,    
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     routing,
     AuthenticationModule,
-    ReactiveFormsModule,
-    HttpClientModule
   ],
-  providers: [],
+  providers: [CookieService, AuthenticationService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
