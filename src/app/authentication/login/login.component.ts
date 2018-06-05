@@ -27,9 +27,17 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    if(this.authService.authenticate(this.loginForm.controls.email.value, this.loginForm.controls.password.value)){
-      this.router.navigate(['/admin']);
-    }
+    this.authService.authenticate(this.loginForm.controls.email.value, 
+                                this.loginForm.controls.password.value)
+                                .subscribe(
+                                  (data: any) => {
+                                    this.authService.saveToken(data.access_token);                                    
+                                    this.router.navigate(['/admin/home']);
+                                  },
+                                  (error : any) => {
+                                    alert('Unathorized user !');
+                                  }
+                                );
   }
 
 }

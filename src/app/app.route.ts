@@ -1,4 +1,4 @@
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes : Routes = [
@@ -6,4 +6,4 @@ const routes : Routes = [
     {path: 'admin', loadChildren: 'src/app/admin/admin.module#AdminModule', canActivate: [AuthGuard], canLoad: [AuthGuard]}
 ];
 
-export const routing = RouterModule.forRoot(routes);
+export const routing = RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules});

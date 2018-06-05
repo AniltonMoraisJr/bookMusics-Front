@@ -1,33 +1,58 @@
 import { Injectable } from '@angular/core';
 
 import { Router } from '@angular/router';
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+import { config } from '../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  
-  constructor(private router: Router, private cookieServie: CookieService) { }
+  constructor(private router: Router, 
+              private http: HttpClient) { }
 
   authenticate(email: string, password: string){
     if(email != '' && password != ''){
-      this.cookieServie.put('access_token', 'token');
-      return true;
-    }
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json'
+        })
+      };
+      const url: string = config[0]['deploy'][0]['url'] + '/login';
+      return this.http.post(url, JSON.stringify({email: email, password: password}), httpOptions)
+      
+    } 
+  }
 
-    return false;
-    
+  saveToken(access_token: string){
+    localStorage.setItem('access_token', access_token);
   }
 
   checkCredentials(){
-    if(!this.cookieServie.get('access_token'))
+    if(!localStorage.getItem('access_token'))
       return false;
     else
       return true;
   }
 
   logout(){
-    this.cookieServie.removeAll();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      })
+    };
+    const url: string = config[0]['deploy'][0]['url'] + '/logout';
+    this.http.get(url, httpOptions)
+    .subscribe(
+      (data: any) => {
+        localStorage.removeItem('access_token');
+      },
+      (error : any) => {
+        console.error(error);
+      }
+    );
+    
   }
 }

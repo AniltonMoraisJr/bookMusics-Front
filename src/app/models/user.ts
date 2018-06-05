@@ -1,7 +1,7 @@
 export class User {
     id: number;
     name: string;
-    email: string;
+    email: string; 
     avatar_url: string;
     token: string;
 }

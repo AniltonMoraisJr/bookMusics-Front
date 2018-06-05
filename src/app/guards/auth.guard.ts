@@ -11,14 +11,24 @@ export class AuthGuard implements CanActivate, CanLoad {
     constructor(private router: Router, private authService: AuthenticationService) { }
     canLoad(route: Route): boolean |  Observable<boolean> {
         try {
-           return this.verifyAccess();
+            if(this.verifyAccess()){
+                return true;
+            }else{
+                this.router.navigate(['/login']);
+                return false;
+            }
         } catch (error) {
             throw new Error("Method not implemented.");    
         }        
     }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean>  {
         try {
-            return this.verifyAccess();
+            if(this.verifyAccess()){
+                return true;
+            }else{
+                this.router.navigate(['/login']);
+                return false;
+            }
         } catch (error) {
             throw new Error("Method not implemented.");    
         }
