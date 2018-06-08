@@ -1,0 +1,84 @@
+<app-loader *ngIf="bIsLoading"></app-loader>
+<div class="row">      
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="../../home">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="../list">Users</a></li>
+        <li class="breadcrumb-item" aria-current="page" routerLinkActive="active">New User</li>
+      </ol>
+    </nav>
+  </div>
+<div class="row">
+  <h1>New User</h1>
+</div>
+<div class="row">
+  <div class="col-sm-6 col-md-6 col-lg-12">    
+    <form [formGroup]="userForm">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" 
+                  [class]="f.name.invalid && (f.name.dirty || f.name.touched) ? 'form-control is-invalid' : 'form-control'" 
+                    id="name" 
+                    placeholder="Input some name"
+                    formControlName="name"
+                    required
+                    autofocus>
+            <div *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)"
+            class="invalid-feedback">
+        
+              <div *ngIf="f.name.errors.required">
+                Name is required.
+              </div>
+              <div *ngIf="f.name.errors.minlength">
+                Name must be at least 3 characters long.
+              </div>
+            </div>
+        </div>
+        <div class="form-group">
+          <label for="formEmail">Email</label>
+          <input type="email" 
+                  [class]="f.email.invalid && (f.email.dirty || f.email.touched) ? 'form-control is-invalid' : 'form-control'" 
+                  id="formEmail" 
+                  name='email'
+                  placeholder="Input some valid email"
+                  formControlName="email"
+                  required>
+          <div *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)"
+                class="invalid-feedback">
+      
+            <div *ngIf="f.email.errors.required">
+              Email is required.
+            </div>
+            <div *ngIf="f.email.errors.email">
+              Must be a valid email.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="formPassword">Password</label>
+          <input type="password" 
+                  [class]="f.password.invalid && (f.password.dirty || f.password.touched) ? 'form-control is-invalid' : 'form-control'"  
+                  id="formPassword" 
+                  name='password'
+                  placeholder="Input a password bigger then 6 caracteres"
+                  formControlName="password"
+                  required>
+          <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)"
+                class="invalid-feedback">
+        
+              <div *ngIf="f.password.errors.required">
+                Password is required.
+              </div>
+              <div *ngIf="f.password.errors.minlength">
+                Password must be at least 6 characters long.
+              </div>
+          </div>
+        </div>
+    </form>
+    <button class="btn btn-lg btn-primary btn-block" 
+            type="submit" (click) = "onSubmit()"
+            [disabled]="userForm.invalid">
+              Save
+    </button>
+  </div>
+</div>

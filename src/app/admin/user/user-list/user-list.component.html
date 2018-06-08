@@ -1,3 +1,4 @@
+<app-loader *ngIf="isLoading"></app-loader>
 <div class="row">    
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -7,28 +8,37 @@
   </nav>
 </div>
 <div class="row">
-  <div class="table-responsive">
-    <table class="table table-bordered table-hover">
-      <thead class="thead-dark">
-        <tr>
-          <th class="hidden-sm">Id</th>
-          <th>Name</th>
-          <th class="hidden-sm">E-mail</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users" routerLink="../{{user.id}}" style="cursor: pointer;">
-          <td class="hidden-sm">{{ user.id }}</td>
-          <td>{{ user.name }}</td>
-          <td class="hidden-sm">{{ user.email }}</td>
-          <td>
-            <button class="btn btn-outline-secondary mx-1">Edit</button>
-            <button class="btn btn-outline-danger mx-1">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <a class="btn btn-primary" routerLink="../new" style="margin-left: auto">
+      <i class="fa fa-plus"></i> New User
+  </a>
+</div>
+<br>
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th class="hidden-sm">Id</th>
+            <th>Name</th>
+            <th class="hidden-sm">E-mail</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td class="hidden-sm">{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td class="hidden-sm">{{ user.email }}</td>
+            <td>
+              <button class="btn btn-outline-info mx-1" routerLink="../{{user.id}}">View</button>
+              <button class="btn btn-outline-secondary mx-1" routerLink="../edit/{{user.id}}">Edit</button>
+              <button class="btn btn-outline-danger mx-1" (click) = "onDelete(user.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div class="row justify-content-center">
         <nav aria-label="Page navigation example">
             <ul class="pagination">

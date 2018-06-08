@@ -1,3 +1,4 @@
+<app-loader *ngIf="isLoading"></app-loader>
 <div class="row">
       
   <nav aria-label="breadcrumb">
@@ -22,28 +23,30 @@
               class="img-circle img-responsive"> 
           </div>        
           <div class="col-sm-6 col-md-9 col-lg-9 "> 
-            <table class="table table-user-information">
-              <tbody>
-                <tr>
-                  <td>Name:</td>
-                  <td>{{ user?.name }}</td>
-                </tr>
-                <tr>
-                  <td>Email:</td>
-                  <td>{{ user?.email }}</td>
-                </tr>
-                <tr>
-                  <td>Created at:</td>
-                  <td>{{ user?.created_at }}</td>
-                </tr>                                      
-              </tbody>
-            </table>
+            <div class="table-responsive">            
+              <table class="table table-user-information">
+                <tbody>
+                  <tr>
+                    <td>Name:</td>
+                    <td>{{ user?.name }}</td>
+                  </tr>
+                  <tr>
+                    <td>Email:</td>
+                    <td>{{ user?.email }}</td>
+                  </tr>
+                  <tr>
+                    <td>Created at:</td>
+                    <td>{{ user?.created_at }}</td>
+                  </tr>                                      
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
       <div class="card-footer">
-          <button class="btn btn-outline-secondary mx-1">Edit</button>
-          <button class="btn btn-outline-danger mx-1">Delete</button>
+          <button class="btn btn-outline-secondary mx-1" routerLink="../edit/{{user?.id}}">Edit</button>
+          <button class="btn btn-outline-danger mx-1" (click) = "onDelete(user?.id)">Delete</button>
       </div>    
     </div>
   </div>

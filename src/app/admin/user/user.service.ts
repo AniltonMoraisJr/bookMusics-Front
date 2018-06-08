@@ -44,14 +44,35 @@ export class UserService implements CrudInterface{
     }     
     return this.http.get<any>(url, httpOptions);
   }
-  save<User>(object: any): Observable<User> {
-    throw new Error("Method not implemented.");
+  store<User>(user: User): Observable<User> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      })
+    };
+    const url: string = config[0]['deploy'][0]['url'] + '/users';
+    return this.http.post<User>(url,user, httpOptions);
   }
-  update<User>(object: any): Observable<User> {
-    throw new Error("Method not implemented.");
+  update<User>(user: User, id: number): Observable<User> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      })
+    };
+    const url: string = config[0]['deploy'][0]['url'] + '/users/' + id;
+    return this.http.put<User>(url,JSON.stringify(user),httpOptions);
   }
-  delete<User>(object: any): Observable<User> {
-    throw new Error("Method not implemented.");
+  delete(id?: number): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      })
+    };
+    const url: string = config[0]['deploy'][0]['url'] + '/users/' + id;
+    return this.http.delete(url, httpOptions);
   }
   show<User>(id?: number): Observable<User> {
     const httpOptions = {
